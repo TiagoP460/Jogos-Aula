@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     // Mudamos de "HealthBar" (script) para "Image" (componente nativo do Unity)
     public Image barraDeVidaImagem; 
 
+    
     void Start()
     {
         currentHealth = maxHealth;
