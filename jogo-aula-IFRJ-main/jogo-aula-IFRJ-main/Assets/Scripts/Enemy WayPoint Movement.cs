@@ -15,6 +15,10 @@ public class EnemyWaypointMovement : MonoBehaviour
     public float attackCooldown = 1f;
     public float knockbackForce = 15f;
     
+    // Adicionei esta variável para você controlar o quão "alto" é o empurrão (opcional, padrão 1)
+    [Tooltip("Define o quão para cima o player vai (1 = 45 graus, maior que 1 = mais vertical)")]
+    public float knockbackUpwardBias = 1f; 
+
     private Rigidbody2D rb;
     private int currentWaypointIndex = 0;
     private Vector2 movementDirection;
@@ -119,9 +123,18 @@ public class EnemyWaypointMovement : MonoBehaviour
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                // Calcula direção do knockback (do inimigo para o player)
-                Vector2 knockbackDirection = (player.transform.position - transform.position).normalized;
+                // --- ALTERAÇÃO AQUI ---
                 
+                // 1. Descobre se o player está na direita (1) ou esquerda (-1) do inimigo
+                float directionX = Mathf.Sign(player.transform.position.x - transform.position.x);
+                
+                // 2. Cria um vetor: 
+                // X = direção para longe do inimigo
+                // Y = knockbackUpwardBias (força para cima)
+                Vector2 knockbackDirection = new Vector2(directionX, knockbackUpwardBias).normalized;
+                
+                // ----------------------
+
                 playerHealth.TakeDamage(damage, knockbackDirection, knockbackForce);
                 lastAttackTime = Time.time;
             }
