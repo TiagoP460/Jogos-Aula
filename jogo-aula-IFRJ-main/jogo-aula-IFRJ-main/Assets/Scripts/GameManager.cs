@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance; // Cria uma referência global
 
     [Header("Configurações da UI")]
-    public GameObject painelGameOver;
-    public GameObject painelVitoria;
+    public GameObject PanelGameOver;
+    public GameObject PanelVictory;
 
     [Header("Configurações de Jogo")]
     public int moedasColetadas = 0;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     // Chama isso quando o jogador morre
     public void GameOver()
     {
-        painelGameOver.SetActive(true); // Mostra a tela de morte
+        PanelGameOver.SetActive(true); // Mostra a tela de morte
         Time.timeScale = 0; // Pausa o jogo
     }
 
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     public void Vitoria()
     {
-        painelVitoria.SetActive(true); // Mostra a tela de vitória
+        PanelVictory.SetActive(true); // Mostra a tela de vitória
         Time.timeScale = 0; // Pausa o jogo
     }
 
