@@ -4,12 +4,23 @@ public class CoinCounter : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger entered by: " + other.gameObject.name);
-
+        // Verifica se foi o Player que tocou na moeda
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered the trigger!");
+            // --- A MUDANÇA ESTÁ AQUI ---
+            // Avisa ao GameManager para somar +1 na contagem
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.ColetarMoeda();
+            }
+            else
+            {
+                Debug.LogError("ERRO: Não encontrei o GameManager na cena!");
+            }
+            // ---------------------------
+
+            // Destrói a moeda (ela some da tela)
             Destroy(gameObject);
         }
-    }    
+    }
 }

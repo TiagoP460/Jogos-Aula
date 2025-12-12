@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; // <--- ADICIONADO: Necessário para controlar a interface (UI)
+using UnityEngine.UI; 
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,10 +9,8 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D rb;
 
     [Header("Interface")]
-    // Mudamos de "HealthBar" (script) para "Image" (componente nativo do Unity)
     public Image barraDeVidaImagem; 
 
-    
     void Start()
     {
         currentHealth = maxHealth;
@@ -25,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage, Vector2 knockbackDirection, float knockbackForce = 10f)
     {
         currentHealth -= damage;
-        Debug.Log("Player levou dano! Vida atual: " + currentHealth);
+        // Debug.Log("Player levou dano! Vida atual: " + currentHealth);
 
         // Aplica knockback
         if (rb != null)
@@ -46,10 +44,8 @@ public class PlayerHealth : MonoBehaviour
 
     void AtualizarBarraDeVida()
     {
-        // Só tenta atualizar se você tiver arrastado a imagem no Inspector
         if (barraDeVidaImagem != null)
         {
-            // O fillAmount vai de 0 a 1 (ex: 50 / 100 = 0.5, que é metade da barra)
             barraDeVidaImagem.fillAmount = currentHealth / maxHealth;
         }
     }
@@ -57,6 +53,15 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player morreu!");
-        gameObject.SetActive(false);
+
+        // --- AQUI ESTÁ A MUDANÇA ---
+        // Chama o GameManager para mostrar a tela de Game Over
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.GameOver();
+        }
+        // ---------------------------
+
+        gameObject.SetActive(false); // Desativa o player
     }
 }
